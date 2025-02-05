@@ -30,19 +30,39 @@ export const atualizarCarro = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  res.send("Atualizando um carro");
+  try {
+    const { id, marca, modelo, ano, cor, valor } = req.body;
+    await knex("carros")
+      .where({ id })
+      .update({ marca, modelo, ano, cor, valor });
+    res.status(200).json({ mensagem: "Carro atualizado com sucesso" });
+  } catch (error) {
+    res.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
 };
 
 export const deletarCarro = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  res.send("Deletando um carro");
+  try {
+    const { id } = req.params;
+    await knex("carros").where({ id }).del();
+    res.status(200).json({ mensagem: "Carro deletado com sucesso" });
+  } catch (error) {
+    res.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
 };
 
 export const obterCarro = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  res.send("Obter um carro");
+  try {
+    const { id } = req.params;
+    const carro = await knex("carros").where({ id }).first();
+    res.json(carro);
+  } catch (error) {
+    res.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
 };
