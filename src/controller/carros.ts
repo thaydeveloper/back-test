@@ -31,7 +31,8 @@ export const atualizarCarro = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id, marca, modelo, ano, cor, valor } = req.body;
+    const { id } = req.params;
+    const { marca, modelo, ano, cor, valor } = req.body;
     await knex("carros")
       .where({ id })
       .update({ marca, modelo, ano, cor, valor });
@@ -61,7 +62,7 @@ export const obterCarro = async (
   try {
     const { id } = req.params;
     const carro = await knex("carros").where({ id }).first();
-    res.json(carro);
+    res.status(200).json(carro);
   } catch (error) {
     res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
