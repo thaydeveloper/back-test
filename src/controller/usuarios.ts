@@ -13,3 +13,16 @@ export const criarUsuario = async (
     res.status(500).json({ mensagem: "Erro interno do servidor" });
   }
 };
+
+export const obterUsuario = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const usuario = await knex("usuarios").where({ id }).first();
+    res.status(200).json(usuario);
+  } catch (error) {
+    res.status(500).json({ mensagem: "Erro interno do servidor" });
+  }
+};
