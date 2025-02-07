@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 import { knex } from "../db/conexao";
 
+const bcrypt = require("bcrypt");
+
 export const criarUsuario = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
     const { nome, email, senha } = req.body;
+    const hash = await bcrypt.hash(senha, 10);
     await knex("usuarios").insert({ nome, email, senha });
     res.status(201).json({ mensagem: "Usuário criado com sucesso" });
   } catch (error) {

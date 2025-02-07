@@ -6,6 +6,7 @@ import {
   listarCarros,
   obterCarro,
 } from "./controller/carros";
+import { criarUsuario, obterUsuario } from "./controller/usuarios";
 
 const rotas = Router();
 
@@ -14,5 +15,8 @@ rotas.post("/carros", criarCarro);
 rotas.put("/carros/:id", atualizarCarro);
 rotas.delete("/carros/:id", deletarCarro);
 rotas.get("/carros/:id", obterCarro);
+
+rotas.post("/usuarios", criarUsuario);
+rotas.get("/usuarios/:id", obterUsuario);
 
 export default rotas;
