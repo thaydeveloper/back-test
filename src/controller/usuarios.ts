@@ -8,9 +8,10 @@ export const criarUsuario = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { nome, email, senha } = req.body;
-    const hash = await bcrypt.hash(senha, 10);
-    await knex("usuarios").insert({ nome, email, senha });
+    const { nome, email, password } = req.body;
+    const hash = await bcrypt.hash(password, 10);
+
+    await knex("usuarios").insert({ nome, email, password: hash });
     res.status(201).json({ mensagem: "Usuário criado com sucesso" });
   } catch (error) {
     res.status(500).json({ mensagem: "Erro interno do servidor" });
