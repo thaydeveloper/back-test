@@ -7,8 +7,11 @@ import {
   obterCarro,
 } from "./controller/carros";
 import { criarUsuario, obterUsuario } from "./controller/usuarios";
+import { login } from "./controller/login";
 
 const rotas = Router();
+
+rotas.post("/login", login);
 
 rotas.get("/carros", listarCarros);
 rotas.post("/carros", criarCarro);
