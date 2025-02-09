@@ -12,7 +12,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       const senhaCorreta = await bcrypt.compare(password, usuario.password);
 
       if (senhaCorreta) {
-        const token = jwt.sign({ id: usuario.id }, "secretkey", {
+        const token = jwt.sign({ id: usuario.id }, process.env.SECRET_KEY_JWT, {
           expiresIn: "8h",
         });
 
