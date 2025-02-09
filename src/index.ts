@@ -1,5 +1,6 @@
 import express from "express";
 import rotas from "./router";
+require("dotenv").config();
 
 const app = express();
 

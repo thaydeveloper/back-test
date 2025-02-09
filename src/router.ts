@@ -8,18 +8,18 @@ import {
 } from "./controller/carros";
 import { criarUsuario, obterUsuario } from "./controller/usuarios";
 import { login } from "./controller/login";
+import { authenticate } from "./middleware/auth";
 
 const rotas = Router();
 
-rotas.post("/login", login);
-
-rotas.get("/carros", listarCarros);
-rotas.post("/carros", criarCarro);
-rotas.put("/carros/:id", atualizarCarro);
-rotas.delete("/carros/:id", deletarCarro);
-rotas.get("/carros/:id", obterCarro);
-
 rotas.post("/usuarios", criarUsuario);
 rotas.get("/usuarios/:id", obterUsuario);
+rotas.post("/login", login);
+
+rotas.get("/carros", authenticate, listarCarros);
+rotas.post("/carros", authenticate, criarCarro);
+rotas.put("/carros/:id", authenticate, atualizarCarro);
+rotas.delete("/carros/:id", authenticate, deletarCarro);
+rotas.get("/carros/:id", authenticate, obterCarro);
 
 export default rotas;
