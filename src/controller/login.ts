@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { knex } from "../db/conexao";
 
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -11,7 +12,11 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       const senhaCorreta = await bcrypt.compare(password, usuario.password);
 
       if (senhaCorreta) {
-        res.status(200).json({ mensagem: "Login bem-sucedido", usuario });
+        const token = jwt.sign({ id: usuario.id }, "secretkey", {
+          expiresIn: "8h",
+        });
+
+        res.status(200).json({ mensagem: "Login bem-sucedido", token });
       } else {
         res.status(401).json({ mensagem: "Senha incorreta" });
       }
